@@ -11,7 +11,7 @@ import { Balcony, ExitToApp, } from '@mui/icons-material'
 // import { DrawerComponent } from 'components';
 import { Outlet } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'store/reducers/user.slice';
 
 
@@ -19,12 +19,9 @@ import { logout } from 'store/reducers/user.slice';
 
 function Layout() {
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const location = useLocation()
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-    const drawerWidth = 240;
     const dispatch = useDispatch()
-    const authRoutes = ['/login', '/register'];
-    const userRoutes = ['/', '/taxi-service', '/barber', '/doctor', '/dentist']
+    const user = useSelector(state => state.user)
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -65,13 +62,18 @@ function Layout() {
                     >
                         IMDB Clone
                     </Typography>
-                    <Button endIcon={<ExitToApp />} onClick={() => dispatch(logout())}>Logout</Button>
+                    {user && (
+                        <div style={{ display: 'flex' }}>
+                            <Typography sx={{ p: 2 }} variant="h5">{user.name}</Typography>
+                            <Button endIcon={<ExitToApp />} onClick={() => dispatch(logout())}>Logout</Button>
+                        </div>
+                    )}
                 </Toolbar>
             </AppBar>
             <Box
                 component="main"
                 sx={{
-                    flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, background: '#eeeeee',
+                    flexGrow: 1, p: 3, background: '#eeeeee',
                     height: 'auto', minHeight: '100vh'
                 }}
             >

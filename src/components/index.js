@@ -16,7 +16,7 @@ axios.interceptors.request.use(req => {
     store.dispatch(startLoading())
     return {
         ...req,
-        baseURL: 'http://localhost:8080'
+        baseURL: 'https://imdb-clone123.herokuapp.com'
     }
 }, err => {
     if (err.response && err.response.data && err.response.data.error) { store.dispatch(openSnack({ type: 'error', text: err.response.data.error })) }
