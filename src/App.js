@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import MuiThemeProvider from '@mui/material/styles/ThemeProvider'
+import theme from 'themes/defaultTheme'
+import { AuthRoutes, UserRoutes } from './routes'
+import SnacbarComponent from 'components/Snackbar/Snackbar';
+import { Loader } from 'components';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from 'store/reducers/user.slice';
+import jwtDecode from 'jwt-decode'
 
 function App() {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) dispatch(setUser(jwtDecode(token)))
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <SnacbarComponent />
+      <Loader />
+      {user ? <UserRoutes /> : <AuthRoutes />}
+    </MuiThemeProvider>
   );
 }
 
