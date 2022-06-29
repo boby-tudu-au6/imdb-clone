@@ -52,6 +52,11 @@ function Login() {
         <Typography variant="h3">Login</Typography>
         <br />
         <Icon style={{ fontSize: 200 }} icon="arcticons:lock" />
+        <div style={{ textAlign: 'center' }}>
+          <i>Dummy data is added for this</i>
+          <p><strong>email:</strong> js903783@gmail.com</p>
+          <p><strong>password:</strong> 1234</p>
+        </div>
         <FormGenerator
           control={control}
           child={[

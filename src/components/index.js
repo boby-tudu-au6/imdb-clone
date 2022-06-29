@@ -16,7 +16,11 @@ axios.interceptors.request.use(req => {
     store.dispatch(startLoading())
     return {
         ...req,
-        baseURL: 'https://imdb-clone123.herokuapp.com'
+        baseURL: 'https://imdb-clone123.herokuapp.com',
+        // baseURL: 'http://localhost:8080',
+        headers: {
+            author: localStorage.getItem('user')
+        }
     }
 }, err => {
     if (err.response && err.response.data && err.response.data.error) { store.dispatch(openSnack({ type: 'error', text: err.response.data.error })) }

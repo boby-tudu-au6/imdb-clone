@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('user')
     if (token) dispatch(setUser(jwtDecode(token)))
   }, []);
 
